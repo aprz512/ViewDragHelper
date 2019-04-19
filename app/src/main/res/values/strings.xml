@@ -4,5 +4,6 @@
     <string name="app_name">ViewDragHelper</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="pull_me">拉我</string>
 
 </resources>

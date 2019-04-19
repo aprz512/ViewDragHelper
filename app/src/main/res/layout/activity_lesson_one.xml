@@ -1,15 +1,25 @@
-<com.jacob.viewdraghelper.lesson1.DragLayoutOne
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.jacob.viewdraghelper.lesson1.DragLayoutOne xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <View
-        android:id="@+id/dragview"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="#ffd74d99"/>
+    <ImageView
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/gakki" />
+
+    <TextView
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#bbbbbb"
+        android:gravity="center"
+        android:text="@string/pull_me"
+        android:textColor="@android:color/black"
+        android:textSize="40sp" />
 
 </com.jacob.viewdraghelper.lesson1.DragLayoutOne>

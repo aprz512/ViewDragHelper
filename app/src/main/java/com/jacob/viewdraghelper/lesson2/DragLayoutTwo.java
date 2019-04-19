@@ -18,10 +18,12 @@ public class DragLayoutTwo extends LinearLayout {
     private View mDragView;
     private ViewDragHelper mViewDragHelper;
 
-    //给出3个位置等级
-    public static  int TOP_SNAPPING_POINT = 0;
-    public static  int MIDDLE_SNAPPING_POINT = 0;
-    public static  int BOTTOM_SNAPPING_POINT = 0;
+    /**
+     * 给出3个位置等级
+     */
+    public static int TOP_SNAPPING_POINT = 0;
+    public static int MIDDLE_SNAPPING_POINT = 0;
+    public static int BOTTOM_SNAPPING_POINT = 0;
 
     public DragLayoutTwo(Context context) {
         this(context, null);
@@ -39,60 +41,60 @@ public class DragLayoutTwo extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         mDragView = findViewById(R.id.dragview);
-        mViewDragHelper = ViewDragHelper.create(this,1f,new DragLayoutCallBack());
+        mViewDragHelper = ViewDragHelper.create(this, 1f, new DragLayoutCallBack());
     }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         TOP_SNAPPING_POINT = 0;
-        MIDDLE_SNAPPING_POINT = getMeasuredHeight()/2-mDragView.getMeasuredHeight()/2;
-        BOTTOM_SNAPPING_POINT = getMeasuredHeight()-mDragView.getMeasuredHeight();
+        MIDDLE_SNAPPING_POINT = getMeasuredHeight() / 2 - mDragView.getMeasuredHeight() / 2;
+        BOTTOM_SNAPPING_POINT = getMeasuredHeight() - mDragView.getMeasuredHeight();
 
     }
 
-    private class DragLayoutCallBack extends ViewDragHelper.Callback{
+    private class DragLayoutCallBack extends ViewDragHelper.Callback {
 
         @Override
         public boolean tryCaptureView(View child, int pointerId) {
-            return child==mDragView;
+            return child == mDragView;
         }
 
         @Override
         public int clampViewPositionVertical(View child, int top, int dy) {
-            if (top<getPaddingTop()){
+            if (top < getPaddingTop()) {
                 return getPaddingTop();
             }
 
-            if (top>getHeight()-child.getMeasuredHeight()){
-                return getHeight()-child.getMeasuredHeight();
+            if (top > getHeight() - child.getMeasuredHeight()) {
+                return getHeight() - child.getMeasuredHeight();
             }
             return top;
         }
 
         @Override
         public int getViewVerticalDragRange(View child) {
-            return getMeasuredHeight()-child.getMeasuredHeight();
+            return getMeasuredHeight() - child.getMeasuredHeight();
         }
 
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
-            Log.e("TAG","onViewReleased");
+            Log.e("TAG", "onViewReleased");
             snapToPoint(releasedChild.getTop());
         }
     }
 
     private void snapToPoint(int paddingTop) {
-        if (paddingTop<=MIDDLE_SNAPPING_POINT){
-            if ((MIDDLE_SNAPPING_POINT-paddingTop)>paddingTop){
+        if (paddingTop <= MIDDLE_SNAPPING_POINT) {
+            if ((MIDDLE_SNAPPING_POINT - paddingTop) > paddingTop) {
                 snapTop();
-            }else{
+            } else {
                 snapMiddle();
             }
-        }else{
-            if ((paddingTop-MIDDLE_SNAPPING_POINT)>(BOTTOM_SNAPPING_POINT-paddingTop)){
+        } else {
+            if ((paddingTop - MIDDLE_SNAPPING_POINT) > (BOTTOM_SNAPPING_POINT - paddingTop)) {
                 snapBottom();
-            }else {
+            } else {
                 snapMiddle();
             }
         }
@@ -102,7 +104,7 @@ public class DragLayoutTwo extends LinearLayout {
     @Override
     public void computeScroll() {
         super.computeScroll();
-        if (mViewDragHelper.continueSettling(true)){
+        if (mViewDragHelper.continueSettling(true)) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
     }
@@ -115,27 +117,28 @@ public class DragLayoutTwo extends LinearLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()){
+        switch (ev.getAction()) {
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
                 mViewDragHelper.cancel();
                 return false;
         }
-        return   mViewDragHelper.shouldInterceptTouchEvent(ev);
+        return mViewDragHelper.shouldInterceptTouchEvent(ev);
     }
 
-    private void snapTop(){
-        Log.e("TAG","snapTop");
-        mViewDragHelper.settleCapturedViewAt(0,TOP_SNAPPING_POINT);
+    private void snapTop() {
+        Log.e("TAG", "snapTop");
+        mViewDragHelper.settleCapturedViewAt(0, TOP_SNAPPING_POINT);
     }
 
-    private void snapMiddle(){
-        Log.e("TAG","snapMiddle");
-        mViewDragHelper.settleCapturedViewAt(0,MIDDLE_SNAPPING_POINT);
+    private void snapMiddle() {
+        Log.e("TAG", "snapMiddle");
+        mViewDragHelper.settleCapturedViewAt(0, MIDDLE_SNAPPING_POINT);
     }
-    private void snapBottom(){
-        Log.e("TAG","snapBottom");
-        mViewDragHelper.settleCapturedViewAt(0,BOTTOM_SNAPPING_POINT);
+
+    private void snapBottom() {
+        Log.e("TAG", "snapBottom");
+        mViewDragHelper.settleCapturedViewAt(0, BOTTOM_SNAPPING_POINT);
     }
 
 }
